@@ -11,3 +11,12 @@ type Artists struct {
 	ConcertDatesURL string   `json:"concertDates"`
 	RelationsURL    string   `json:"relations"`
 }
+type Location struct {
+	ID        int      `json:"id"`
+	Locations []string `json:"locations"`
+	Dates     string   `json:"dates"`
+}
+
+type Locations struct {
+	Index []Location `json:"index"`
+}
