@@ -32,3 +32,6 @@ type ArtistDetails struct {
 	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
+type Relation struct {
+	Index []ArtistDetails `json:"index"`
+}
