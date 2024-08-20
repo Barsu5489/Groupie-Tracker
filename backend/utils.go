@@ -15,7 +15,7 @@ var (
 	artistsData   json.RawMessage
 	locationsData json.RawMessage
 	datesData     json.RawMessage
-	relationsData json.RawMessage
+	relationData  json.RawMessage
 )
 
 const APIURL = "https://groupietrackers.herokuapp.com/api"
@@ -42,6 +42,7 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 
 func GetAndUnmarshalArtists() ([]Artists, error) {
 	artists := []Artists{}
+
 	if artistsData != nil {
 		err := json.Unmarshal(artistsData, &artists)
 		if err != nil {
@@ -55,10 +56,52 @@ func GetAndUnmarshalArtists() ([]Artists, error) {
 		return artists, err
 	}
 
+	artistsData = jsonData
+
 	err = json.Unmarshal(jsonData, &artists)
 	if err != nil {
 		return artists, err
 	}
 
 	return artists, nil
+}
+
+func GetAndUnmarshalLocations(Id int) (Location, error) {
+	locations := Locations{}
+	location := Location{}
+
+	if locationsData != nil {
+		err := json.Unmarshal(locationsData, &locations)
+		if err != nil {
+			return location, err
+		}
+
+		for _, v := range locations.Index {
+			if v.ID == Id {
+				location = v
+			}
+		}
+
+		return location, nil
+	}
+
+	jsonData, err := getJSONData("/locations")
+	if err != nil {
+		return location, err
+	}
+
+	locationsData = jsonData
+
+	err = json.Unmarshal(jsonData, &locations)
+	if err != nil {
+		return location, err
+	}
+
+	for _, v := range locations.Index {
+		if v.ID == Id {
+			location = v
+		}
+	}
+
+	return location, nil
 }
