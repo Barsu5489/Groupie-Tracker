@@ -105,3 +105,43 @@ func GetAndUnmarshalLocations(Id int) (Location, error) {
 
 	return location, nil
 }
+
+func GetAndUnmarshalRelation(Id int) (ArtistDetails, error) {
+	relation := Relation{}
+	artistDetails := ArtistDetails{}
+
+	if relationData != nil {
+		err := json.Unmarshal(relationData, &relation)
+		if err != nil {
+			return artistDetails, err
+		}
+
+		for _, v := range relation.Index {
+			if v.ID == Id {
+				artistDetails = v
+			}
+		}
+
+		return artistDetails, nil
+	}
+
+	jsonData, err := getJSONData("/relation")
+	if err != nil {
+		return artistDetails, err
+	}
+
+	relationData = jsonData
+
+	err = json.Unmarshal(jsonData, &relation)
+	if err != nil {
+		return artistDetails, err
+	}
+
+	for _, v := range relation.Index {
+		if v.ID == Id {
+			artistDetails = v
+		}
+	}
+
+	return artistDetails, nil
+}
