@@ -106,6 +106,46 @@ func GetAndUnmarshalLocations(Id int) (Location, error) {
 	return location, nil
 }
 
+func GetAndUnmarshalDates(Id int) (Date, error) {
+	dates := Dates{}
+	date := Date{}
+
+	if datesData != nil {
+		err := json.Unmarshal(datesData, &dates)
+		if err != nil {
+			return date, err
+		}
+
+		for _, v := range dates.Index {
+			if v.ID == Id {
+				date = v
+			}
+		}
+
+		return date, nil
+	}
+
+	jsonData, err := getJSONData("/dates")
+	if err != nil {
+		return date, err
+	}
+
+	datesData = jsonData
+
+	err = json.Unmarshal(jsonData, &dates)
+	if err != nil {
+		return date, err
+	}
+
+	for _, v := range dates.Index {
+		if v.ID == Id {
+			date = v
+		}
+	}
+
+	return date, nil
+}
+
 func GetAndUnmarshalRelation(Id int) (ArtistDetails, error) {
 	relation := Relation{}
 	artistDetails := ArtistDetails{}
