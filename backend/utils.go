@@ -3,7 +3,10 @@ package backend
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"path/filepath"
+	"text/template"
 	"time"
 )
 
@@ -39,6 +42,21 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 	}
 
 	return jsonString, nil
+}
+func renderTemplate(w http.ResponseWriter, templateName string, data interface{}) {
+	tempFile := filepath.Join("frontend", templateName)
+	temp, err := template.ParseFiles(tempFile)
+	if err != nil {
+		http.Error(w, "Failed to load template", http.StatusInternalServerError)
+		log.Printf("Error parsing template file: %v", err)
+		return
+	}
+
+	err = temp.Execute(w, data)
+	if err != nil {
+		http.Error(w, "Failed to render template", http.StatusInternalServerError)
+		log.Printf("Error executing template: %v", err)
+	}
 }
 
 // unmarshalData is a helper function to unmarshal cached JSON data or fetch it if not available
