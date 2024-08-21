@@ -60,12 +60,12 @@ p {
   <div class="artist-grid">
     <div class="artist-info">
       <h2>Artist Name</h2>
-      <p class="location">Location</p>
-      <p class="dates">Date</p>
+      {{ range $key, $value := .DatesLocations }}
+      <p class="location">{{ $key }}: {{ range $index, $item := $value }} </p>
+      <p class="dates">{{ $item }} </p>
+      {{ end }}
+      {{ end }}
     </div>
-
-
-
   </div>
 </body>
 </html>
