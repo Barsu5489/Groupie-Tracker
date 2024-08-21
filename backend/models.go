@@ -1,5 +1,6 @@
 package backend
 
+// Artists struct for unmarshalling artists data
 type Artists struct {
 	ID              int      `json:"id"`
 	ImageURL        string   `json:"image"`
@@ -11,27 +12,34 @@ type Artists struct {
 	ConcertDatesURL string   `json:"concertDates"`
 	RelationsURL    string   `json:"relations"`
 }
+
+// Nested Locations structs for unmarshalling locations data
+type Locations struct {
+	Index []Location `json:"index"`
+}
+
 type Location struct {
 	ID        int      `json:"id"`
 	Locations []string `json:"locations"`
 	Dates     string   `json:"dates"`
 }
 
-type Locations struct {
-	Index []Location `json:"index"`
+// Nested Dates structs for unmarshalling dates data
+type Dates struct {
+	Index []Date `json:"index"`
 }
+
 type Date struct {
 	ID    int      `json:"id"`
 	Dates []string `json:"dates"`
 }
 
-type Dates struct {
-	Index []Date `json:"index"`
+// Nested Relation structs for unmarshalling relation data
+type Relation struct {
+	Index []ArtistDetails `json:"index"`
 }
+
 type ArtistDetails struct {
 	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
-}
-type Relation struct {
-	Index []ArtistDetails `json:"index"`
 }
