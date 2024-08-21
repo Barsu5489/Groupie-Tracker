@@ -1,0 +1,71 @@
+<html><head><base href="https://example.com/"></head>
+<style>
+body {
+  background-color: #222;
+  color: #ddd;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.artist-info {
+  border: 2px solid #444;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.artist-info:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.location::before {
+  content: "\1F4CD"; /* map pin emoji */
+  margin-right: 10px;
+}
+
+.dates::before {
+  content: "\1F4C5"; /* calendar emoji */
+  margin-right: 10px;  
+}
+
+@media (max-width: 768px) {
+  .artist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<body>
+  <div class="artist-grid">
+    <div class="artist-info">
+      <h2>Artist Name</h2>
+      <p class="location">Location</p>
+      <p class="dates">Date</p>
+    </div>
+
+
+
+  </div>
+</body>
+</html>
