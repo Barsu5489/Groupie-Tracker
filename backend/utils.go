@@ -44,7 +44,7 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 	return jsonString, nil
 }
 func renderTemplate(w http.ResponseWriter, templateName string, data interface{}) {
-	tempFile := filepath.Join("frontend", templateName)
+	tempFile := filepath.Join("templates", templateName)
 	temp, err := template.ParseFiles(tempFile)
 	if err != nil {
 		http.Error(w, "Failed to load template", http.StatusInternalServerError)

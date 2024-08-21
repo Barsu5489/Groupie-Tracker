@@ -14,7 +14,7 @@ func artistsHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error retrieving artists: %v", err)
 			return
 		}
-		renderTemplate(w, "index.html", artists)
+		renderTemplate(w, "artists.html", artists)
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -45,7 +45,7 @@ func artistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		renderTemplate(w, "artist.html", relation)
+		renderTemplate(w, "relations.html", relation)
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -75,7 +75,7 @@ func datesHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		renderTemplate(w, "artist.html", date)
+		renderTemplate(w, "dates.html", date)
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -105,7 +105,7 @@ func locationsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		renderTemplate(w, "artist.html", location)
+		renderTemplate(w, "locations.html", location)
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
