@@ -20,6 +20,7 @@ var (
 
 const APIURL = "https://groupietrackers.herokuapp.com/api"
 
+// getJSONData fetches JSON data from the API and returns it as a RawMessage
 func getJSONData(endpoint string) (json.RawMessage, error) {
 	resp, err := client.Get(APIURL + endpoint)
 	if err != nil {
@@ -40,148 +41,72 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 	return jsonString, nil
 }
 
-func GetAndUnmarshalArtists() ([]Artists, error) {
-	artists := []Artists{}
-
-	if artistsData != nil {
-		err := json.Unmarshal(artistsData, &artists)
-		if err != nil {
-			return artists, err
-		}
-		return artists, nil
+// unmarshalData is a helper function to unmarshal cached JSON data or fetch it if not available
+func unmarshalData(cache *json.RawMessage, endpoint string, out interface{}) error {
+	if *cache != nil {
+		return json.Unmarshal(*cache, out)
 	}
 
-	jsonData, err := getJSONData("/artists")
+	jsonData, err := getJSONData(endpoint)
 	if err != nil {
-		return artists, err
+		return err
 	}
 
-	artistsData = jsonData
-
-	err = json.Unmarshal(jsonData, &artists)
-	if err != nil {
-		return artists, err
-	}
-
-	return artists, nil
+	*cache = jsonData
+	return json.Unmarshal(jsonData, out)
 }
 
-func GetAndUnmarshalLocations(Id int) (Location, error) {
+// GetAndUnmarshalArtists returns a list of artists by fetching or using cached data
+func GetAndUnmarshalArtists() ([]Artists, error) {
+	artists := []Artists{}
+	err := unmarshalData(&artistsData, "/artists", &artists)
+	return artists, err
+}
+
+// GetAndUnmarshalLocations returns a specific location by its ID
+func GetAndUnmarshalLocations(ID int) (Location, error) {
 	locations := Locations{}
-	location := Location{}
-
-	if locationsData != nil {
-		err := json.Unmarshal(locationsData, &locations)
-		if err != nil {
-			return location, err
-		}
-
-		for _, v := range locations.Index {
-			if v.ID == Id {
-				location = v
-			}
-		}
-
-		return location, nil
-	}
-
-	jsonData, err := getJSONData("/locations")
+	err := unmarshalData(&locationsData, "/locations", &locations)
 	if err != nil {
-		return location, err
-	}
-
-	locationsData = jsonData
-
-	err = json.Unmarshal(jsonData, &locations)
-	if err != nil {
-		return location, err
+		return Location{}, err
 	}
 
 	for _, v := range locations.Index {
-		if v.ID == Id {
-			location = v
+		if v.ID == ID {
+			return v, nil
 		}
 	}
-
-	return location, nil
+	return Location{}, fmt.Errorf("location with ID %d not found", ID)
 }
 
-func GetAndUnmarshalDates(Id int) (Date, error) {
+// GetAndUnmarshalDates returns specific dates by their ID
+func GetAndUnmarshalDates(ID int) (Date, error) {
 	dates := Dates{}
-	date := Date{}
-
-	if datesData != nil {
-		err := json.Unmarshal(datesData, &dates)
-		if err != nil {
-			return date, err
-		}
-
-		for _, v := range dates.Index {
-			if v.ID == Id {
-				date = v
-			}
-		}
-
-		return date, nil
-	}
-
-	jsonData, err := getJSONData("/dates")
+	err := unmarshalData(&datesData, "/dates", &dates)
 	if err != nil {
-		return date, err
-	}
-
-	datesData = jsonData
-
-	err = json.Unmarshal(jsonData, &dates)
-	if err != nil {
-		return date, err
+		return Date{}, err
 	}
 
 	for _, v := range dates.Index {
-		if v.ID == Id {
-			date = v
+		if v.ID == ID {
+			return v, nil
 		}
 	}
-
-	return date, nil
+	return Date{}, fmt.Errorf("date with ID %d not found", ID)
 }
 
-func GetAndUnmarshalRelation(Id int) (ArtistDetails, error) {
+// GetAndUnmarshalRelation returns artist details by their ID
+func GetAndUnmarshalRelation(ID int) (ArtistDetails, error) {
 	relation := Relation{}
-	artistDetails := ArtistDetails{}
-
-	if relationData != nil {
-		err := json.Unmarshal(relationData, &relation)
-		if err != nil {
-			return artistDetails, err
-		}
-
-		for _, v := range relation.Index {
-			if v.ID == Id {
-				artistDetails = v
-			}
-		}
-
-		return artistDetails, nil
-	}
-
-	jsonData, err := getJSONData("/relation")
+	err := unmarshalData(&relationData, "/relation", &relation)
 	if err != nil {
-		return artistDetails, err
-	}
-
-	relationData = jsonData
-
-	err = json.Unmarshal(jsonData, &relation)
-	if err != nil {
-		return artistDetails, err
+		return ArtistDetails{}, err
 	}
 
 	for _, v := range relation.Index {
-		if v.ID == Id {
-			artistDetails = v
+		if v.ID == ID {
+			return v, nil
 		}
 	}
-
-	return artistDetails, nil
+	return ArtistDetails{}, fmt.Errorf("relation with ID %d not found", ID)
 }
