@@ -1,4 +1,5 @@
-<html><head>
+<html>
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     :root {
@@ -87,7 +88,7 @@
       }
     }
     </style>
-    </head>
+  </head>
     
     <body>
       <div class="container">
@@ -100,20 +101,11 @@
           <tbody>
             <tr>
               <td data-label="Location" class="accent">
-                <a href="#">Juja</a>
+                {{ range .Locations }}
+                <p class="location">{{ . }}</p>
+                {{ end }}
               </td>
             </tr>
-            <tr>
-                <td data-label="Location" class="accent">
-                  <a href="#">Juja</a>
-                </td>
-              </tr>
-              <tr>
-                <td data-label="Location" class="accent">
-                  <a href="#">Juja</a>
-                </td>
-              </tr>
-
           </tbody>
         </table>
       </div>

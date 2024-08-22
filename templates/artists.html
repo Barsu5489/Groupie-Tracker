@@ -1,7 +1,6 @@
 <html>
 
 <head>
-  <base href="https:">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
@@ -198,19 +197,17 @@
             {{ range .Members }}
             <li>{{ . }}</li>
             {{ end }}
+            <p><b>Creation Date:</b> {{ .CreationDate }}</p>
+            <p><b>First Album:</b> {{ .FirstAlbum }}</p>
           </ul>
           <div class="button-group">
-            <button onclick="location.href='/locations/'">Location</button>
-            <button onclick="location.href='/dates/'">Dates</button>
-            <button onclick="location.href='/relations?id={{ .ID }}'">Relation</button>
+            <button><a href="/locations?id={{ .ID }}" target="_blank">Locations</a></button>
+            <button><a href="/dates?id={{ .ID }}" target="_blank">Dates</a></button>
+            <button><a href="/relation?id={{ .ID }}" target="_blank">Relation</a></button>
           </div>
         </div>
       </div>
       {{ end }}
-
-
-
-
     </div>
   </main>
   <footer>
