@@ -55,8 +55,10 @@
 
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(3, minmax(300px, 1fr));
-      grid-gap: 20px;
+      grid-template-columns: repeat(2, minmax(300px, 1fr));
+      max-width: 1200px;
+      margin: 0 auto;
+      grid-gap: 80px;
       margin-bottom: 40px;
     }
 
@@ -66,6 +68,7 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
       padding: 20px;
       display: flex;
+      height: 250px;
     }
 
     .card img {
@@ -74,6 +77,7 @@
       object-fit: cover;
       border-radius: 10px;
       margin-right: 20px;
+      margin-top: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
@@ -83,10 +87,12 @@
       color: #f0f0f0;
     }
 
-    ul {
+    .card ul {
       margin: 0 0 20px;
       padding-left: 20px;
       color: #ccc;
+      height: 125px;
+      overflow-y: auto;
     }
 
     li {
@@ -96,6 +102,7 @@
     .button-group {
       display: flex;
       gap: 10px;
+      margin-bottom: 20px;
     }
 
     button {
@@ -122,7 +129,7 @@
       font-size: 14px;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 740px) {
       .grid-container {
         display: flex;
         flex-direction: column;
@@ -133,15 +140,42 @@
 
       .card {
         flex-direction: column;
+        margin: 0 auto;
+        height: 650px;
       }
 
       .card img {
-        width: 100%;
-        height: auto;
+        width: 300px;
+        height: 300px;
+        margin-top: 20px;
         margin-right: 0;
         margin-bottom: 20px;
       }
     }
+    @media screen and (min-width: 740px) and (max-width: 1300px) {
+    .grid-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around ;
+        align-items: center;
+        grid-template-columns: 1fr; 
+        padding: 20px;
+    }
+
+    .card {
+        max-width: 600px; 
+        width: 100%;
+        margin: 0 auto; /
+    }
+    .card img {
+      
+        
+        margin-top: 20px;
+      
+        margin-bottom: 20px;
+      }
+}
+
   </style>
 </head>
 
