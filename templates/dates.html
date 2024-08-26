@@ -1,164 +1,50 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-    :root {
-      --bg-color: #121212;
-      --table-bg-color: #1e1e1e;
-      --table-header-bg-color: #282828;
-      --text-color: #f5f5f5;
-      --accent-color: #bb86fc;
-    }
-    
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
-    }
-    
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: var(--table-bg-color);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    
-    th, td {
-      padding: 15px;
-      text-align: left;
-    }
-    
-    th {
-      background-color: var(--table-header-bg-color);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    tr:nth-child(even) {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    tr:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    
-    .accent {
-      color: var(--accent-color);
-    }
-    
+<!DOCTYPE html>
+<html lang="en">
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        /* background-color: #1e1e1e; */
-        padding: 1rem 2rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dates</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
 
-    .navbar-brand {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #ffffff;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .navbar-brand:hover {
-        color: #00aaff;
-    }
-
-    .navbar-menu {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .navbar-menu a {
-        color: #cccccc;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .navbar-menu a:hover {
-        color: #ffffff;
-    }
-
-    @media (max-width: 768px) {
-        .navbar {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .navbar-menu {
-            margin-top: 1rem;
-        }
-    }
-    @media screen and (max-width: 600px) {
-      table {
-        border: 0;
-      }
-    
-      table thead {
-        display: none;
-      }
-    
-      table tr {
-        border-bottom: 3px solid var(--table-header-bg-color);
-        display: block;
-        margin-bottom: 10px;
-      }
-    
-      table td {
-        border-bottom: 1px solid var(--table-header-bg-color);
-        display: block;
-        text-align: right;
-      }
-    
-      table td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-    }
-    </style>
-  </head>
-    
-    <body>
-      <nav class="navbar">
-        <a href="/" class="navbar-brand">Groupie Tracker</a>
-        <!-- <div class="navbar-menu">
+<body>
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">Groupie Tracker</a>
+    <!-- <div class="navbar-menu">
             <a href="/">About</a>
             <a href="/">Contact</a>
         </div> -->
-    </nav>
-      <div class="container">
-        <table>
-          <thead>
-            <tr>
-            
-              <th>Dates</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-label="Date" class="accent">
-                {{ range .Dates }}
-                <p class="date">{{ . }}</p>
-                {{ end }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </body>
-    </html>
+  </nav>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+
+          <th>Dates</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Date" class="accent">
+            {{ range .Dates }}
+            <p class="date">{{ . }}</p>
+            {{ end }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    &copy; 2023 . All rights reserved. | <a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a
+      href="/term" aria-label="Terms of Service">Terms of Service</a>
+    <div class="social-icons">
+      <a href="https://facebook.com/" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://twitter.com/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
+</body>
+
+</html>

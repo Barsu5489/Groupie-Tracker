@@ -1,109 +1,64 @@
-<html>
-  <head>
-<style>
-body {
-  background-color: #222;
-  color: #ddd;
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
+<!DOCTYPE html>
+<html lang="en">
 
-.artist-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.artist-info {
-  border: 2px solid #444;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out;
-}
-
-.artist-info:hover {
-  transform: translateY(-5px);
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.6;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.location::before {
-  content: "\1F4CD"; /* map pin emoji */
-  margin-right: 10px;
-}
-
-.dates::before {
-  content: "\1F4C5"; /* calendar emoji */
-  margin-right: 10px;  
-}
-
-.navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        /* background-color: #1e1e1e; */
-        padding: 1rem 2rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relations</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .navbar-brand {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #ffffff;
-        text-decoration: none;
-        transition: color 0.3s ease;
+    .artist-info {
+      border: 2px solid #444;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease-in-out;
     }
 
-    .navbar-brand:hover {
-        color: #00aaff;
+    .artist-info:hover {
+      transform: translateY(-5px);
     }
 
-    .navbar-menu {
-        display: flex;
-        gap: 1rem;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .navbar-menu a {
-        color: #cccccc;
-        text-decoration: none;
-        transition: color 0.3s ease;
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    .navbar-menu a:hover {
-        color: #ffffff;
+    .location::before {
+      content: "\1F4CD";
+      /* map pin emoji */
+      margin-right: 10px;
+    }
+
+    .dates::before {
+      content: "\1F4C5";
+      /* calendar emoji */
+      margin-right: 10px;
     }
 
     @media (max-width: 768px) {
-        .navbar {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .navbar-menu {
-            margin-top: 1rem;
-        }
+      .artist-grid {
+        grid-template-columns: 1fr;
+      }
     }
-
-@media (max-width: 768px) {
-  .artist-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+  </style>
 </head>
+
 <body>
   <nav class="navbar">
     <a href="/" class="navbar-brand">Groupie Tracker</a>
@@ -111,16 +66,16 @@ p {
         <a href="/">About</a>
         <a href="/">Contact</a>
     </div> -->
-</nav>
+  </nav>
   {{ range $key, $value := .DatesLocations }}
   <div class="artist-grid">
     <div class="artist-info">
       <h2>Artist Name</h2>
-     
+
       <p class="location">{{ $key }}: {{ range $index, $item := $value }} </p>
       <p class="dates">{{ $item }} </p>
       {{ end }}
-    
+
     </div>
   </div>
   {{ end }}
@@ -136,4 +91,5 @@ p {
     </div>
   </footer>
 </body>
+
 </html>

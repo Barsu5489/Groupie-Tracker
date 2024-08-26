@@ -6,7 +6,7 @@ import (
 
 func RegisterRoutes() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("frontend"))))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("templates"))))
 	mux.HandleFunc("/", artistsHandler)
 	mux.HandleFunc("/locations", locationsHandler)
 	mux.HandleFunc("/dates", datesHandler)

@@ -1,30 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
   <style>
-    :root {
-      --bg-color: #1f1f1f;
-      --accent-color: #6c63ff;
-    }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
 
-  
 
- 
+
 
     main {
       padding: 20px;
@@ -99,59 +86,17 @@
       background-color: #4f4ac4;
     }
 
-    footer {
-      background-color: #141414;
-      padding: 20px;
-      text-align: center;
-      color: #ccc;
-      font-size: 14px;
-    }
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #1e1e1e;
-        padding: 1rem 2rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-brand {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #ffffff;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .navbar-brand:hover {
-        color: #00aaff;
-    }
-
-    .navbar-menu {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .navbar-menu a {
-        color: #cccccc;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .navbar-menu a:hover {
-        color: #ffffff;
-    }
 
     @media (max-width: 768px) {
-        .navbar {
-            flex-direction: column;
-            align-items: flex-start;
-        }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
-        .navbar-menu {
-            margin-top: 1rem;
-        }
+      .navbar-menu {
+        margin-top: 1rem;
+      }
     }
 
     @media screen and (max-width: 740px) {
@@ -177,30 +122,31 @@
         margin-bottom: 20px;
       }
     }
+
     @media screen and (min-width: 740px) and (max-width: 1300px) {
-    .grid-container {
+      .grid-container {
         display: flex;
         flex-direction: column;
-        justify-content: space-around ;
+        justify-content: space-around;
         align-items: center;
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
         padding: 20px;
-    }
+      }
 
-    .card {
-        max-width: 600px; 
+      .card {
+        max-width: 600px;
         width: 100%;
-        margin: 0 auto; /
-    }
-    .card img {
-      
-        
+        margin: 0 auto;/
+      }
+
+      .card img {
+
+
         margin-top: 20px;
-      
+
         margin-bottom: 20px;
       }
-}
-
+    }
   </style>
 </head>
 
@@ -211,7 +157,7 @@
         <a href="/">About</a>
         <a href="/">Contact</a>
     </div> -->
-</nav>
+  </nav>
   <main>
     <div class="grid-container">
       {{ range . }}
