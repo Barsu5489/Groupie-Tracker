@@ -59,7 +59,9 @@
 The HTML files serve as the user interface for the Groupie Tracker application. These files provide the structure and layout for the different pages of the application, including:
 
 **Band Profiles:** Displays detailed information about each band, including member details, creation date, first album release date, and images.
+
 **Tour Dates:** Shows a list of upcoming tour dates and venues for the selected band.
+
 **Image Gallery:** Displays images related to the band, including album covers and members. This gallery is often integrated within the band profile page, enhancing the visual appeal and providing users with a richer experience.
 
 Each HTML file is designed to be responsive and user-friendly, ensuring a smooth experience across different devices. The HTML files work in conjunction with CSS for styling and JavaScript for interactivity, creating a seamless and engaging user experience..
