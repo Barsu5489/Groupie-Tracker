@@ -43,18 +43,19 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 
 	return jsonString, nil
 }
+
 func renderTemplate(w http.ResponseWriter, templateName string, data interface{}) {
 	tempFile := filepath.Join("templates", templateName)
 	temp, err := template.ParseFiles(tempFile)
 	if err != nil {
-		http.Error(w, "Failed to load template", http.StatusInternalServerError)
+		renderError(w, http.StatusInternalServerError, "Internal Server Error", "Failed to load template")
 		log.Printf("Error parsing template file: %v", err)
 		return
 	}
 
 	err = temp.Execute(w, data)
 	if err != nil {
-		http.Error(w, "Failed to render template", http.StatusInternalServerError)
+		renderError(w, http.StatusInternalServerError, "Internal Server Error", "Failed to render template")
 		log.Printf("Error executing template: %v", err)
 	}
 }
@@ -127,4 +128,24 @@ func GetAndUnmarshalRelation(ID int) (ArtistDetails, error) {
 		}
 	}
 	return ArtistDetails{}, fmt.Errorf("relation with ID %d not found", ID)
+}
+
+func renderError(w http.ResponseWriter, status int, errorMessage string, information string) {
+	w.WriteHeader(status)
+	tempFile := filepath.Join("templates", "errors.html")
+	t, err := template.ParseFiles(tempFile)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	data := struct {
+		Status int
+		Error  string
+		Info   string
+	}{
+		Status: status,
+		Error:  errorMessage,
+		Info:   information,
+	}
+	t.Execute(w, data)
 }

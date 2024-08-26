@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Status}} {{.Error}} - Groupie Trackers</title>
+  <style>
+    body {
+        background-color: #1f1f1f;
+    }
+
+.error-container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 50px auto;
+  width: 90%;
+  max-width: 600px;
+  background-color: #292929;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.error-container h1 {
+  font-size: 36px;
+  color: #f0f0f0;
+  margin-bottom: 20px;
+}
+.error-container p {
+  font-size: 18px;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+.error-container a {
+  color: #6c63ff;
+  text-decoration: none;
+}
+.error-container a:hover {
+  text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+  <main class="error-container">
+    <h1>{{.Status}} - {{.Error}}</h1>
+    <p>{{.Info}}</p>
+    <p>Go back to <a href="/">Artists Page</a>.</p>
+  </main>
+  </body>
+</html>
