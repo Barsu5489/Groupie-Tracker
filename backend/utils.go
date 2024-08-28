@@ -14,6 +14,7 @@ var client = &http.Client{
 	Timeout: 10 * time.Second,
 }
 
+// fetched json cache
 var (
 	artistsData   json.RawMessage
 	locationsData json.RawMessage
@@ -44,6 +45,7 @@ func getJSONData(endpoint string) (json.RawMessage, error) {
 	return jsonString, nil
 }
 
+// renderTemplate renders the correct html templates
 func renderTemplate(w http.ResponseWriter, templateName string, data interface{}) {
 	tempFile := filepath.Join("templates", templateName)
 	temp, err := template.ParseFiles(tempFile)
@@ -130,6 +132,7 @@ func GetAndUnmarshalRelation(ID int) (ArtistDetails, error) {
 	return ArtistDetails{}, fmt.Errorf("relation with ID %d not found", ID)
 }
 
+// renderError renders http errors status codes with their descriptions
 func renderError(w http.ResponseWriter, status int, errorMessage string, information string) {
 	w.WriteHeader(status)
 	tempFile := filepath.Join("templates", "errors.html")
