@@ -26,13 +26,20 @@
         <img src="{{ .ImageURL }}" alt="image">
         <div class="card-content">
           <h2>{{ .Name }}</h2>
-          <ul>
-            {{ range .Members }}
-            <li>{{ . }}</li>
-            {{ end }}
-            <p><b>Creation Date:</b> {{ .CreationDate }}</p>
-            <p><b>First Album:</b> {{ .FirstAlbum }}</p>
-          </ul>
+          <div class="tooltip">
+            <a href="#">Show Details</a>
+            <div class="tooltip-content">
+              <!-- <span class="close-btn">&times;</span> -->
+              <ul>
+                <p><b>Members:</b></p>
+                {{ range .Members }}
+                <li>{{ . }}</li>
+                {{ end }}
+                <p><b>Creation Date:</b> {{ .CreationDate }}</p>
+                <p><b>First Album:</b> {{ .FirstAlbum }}</p>
+              </ul>
+            </div>
+          </div>
           <div class="button-group">
             <button><a href="/locations?id={{ .ID }}" target="_blank">Locations</a></button>
             <button><a href="/dates?id={{ .ID }}" target="_blank">Dates</a></button>
