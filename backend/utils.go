@@ -11,7 +11,7 @@ import (
 )
 
 var client = &http.Client{
-	Timeout: 10 * time.Second,
+	Timeout: 15 * time.Second,
 }
 
 // fetched json cache
