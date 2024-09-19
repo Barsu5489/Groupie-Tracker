@@ -7,7 +7,7 @@ import (
 )
 
 // artistHandler handles requests to the home page and serves artist cards
-func artistsHandler(w http.ResponseWriter, r *http.Request) {
+func ArtistsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
 		return
@@ -26,7 +26,7 @@ func artistsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // artistDetailsHandler handles requests for the artist relation data
-func artistDetailsHandler(w http.ResponseWriter, r *http.Request) {
+func ArtistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/relation" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
 		return
@@ -61,7 +61,7 @@ func artistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // dates Handler handles requests for the dates data
-func datesHandler(w http.ResponseWriter, r *http.Request) {
+func DatesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/dates" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
 		return
@@ -96,7 +96,7 @@ func datesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // locations Handler handles requests for the locations data
-func locationsHandler(w http.ResponseWriter, r *http.Request) {
+func LocationsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/locations" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
 		return
