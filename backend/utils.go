@@ -25,8 +25,8 @@ var (
 const APIURL = "https://groupietrackers.herokuapp.com/api"
 
 // getJSONData fetches JSON data from the API and returns it as a RawMessage
-func getJSONData(endpoint string) (json.RawMessage, error) {
-	resp, err := client.Get(APIURL + endpoint)
+func GetJSONData(baseURL, endpoint string, client *http.Client) (json.RawMessage, error) {
+	resp, err := client.Get(baseURL + endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get %s json data: %w", endpoint, err)
 	}
@@ -68,7 +68,7 @@ func unmarshalData(cache *json.RawMessage, endpoint string, out interface{}) err
 		return json.Unmarshal(*cache, out)
 	}
 
-	jsonData, err := getJSONData(endpoint)
+	jsonData, err := GetJSONData(APIURL, endpoint, client)
 	if err != nil {
 		return err
 	}
