@@ -153,6 +153,13 @@ func Search(w http.ResponseWriter, r *http.Request) {
 				suggestions = append(suggestions, fmt.Sprintf("%v - Members", mem))
 			}
 		}
+		if strings.Contains(strings.ToLower(v.FirstAlbum), query) {
+			suggestions = append(suggestions, fmt.Sprintf("%v produced firstalbum on %v ",v.Name, v.FirstAlbum))
+		}
+		
+		if strings.Contains(strconv.Itoa(v.CreationDate), query) {
+			suggestions = append(suggestions, fmt.Sprintf("%v created on %v",v.Name, v.CreationDate))
+		}
 	}
 	fmt.Println(suggestions)
 	w.Header().Set("Content-Type", "application/json")
