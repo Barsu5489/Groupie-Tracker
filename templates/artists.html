@@ -66,9 +66,32 @@
 <script>
   document.addEventListener('DOMContentLoaded', function(){
     const searchBar = document.getElementById('Search-Bar')
-    const suggestionList = document.getElementById('suggetions')
+    const suggestionList = document.getElementById('suggestions')
 
     searchBar.addEventListener('input', debounce(searchArtists,300))
+
+    async function searchArtists() {
+      const query = searchBar.value
+      if (query.length < 2) {
+        suggestionList.innerHTML=""
+        return
+      } 
+
+      try{
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+        const suggestions = await response.json()
+        console.log(suggestions)
+        suggestionList.innerHTML = ""
+        suggestions.forEach(suggestion => {
+          let list = document.createElement('li')
+          list.textContent=suggestion
+          suggestionList.appendChild(list)
+        });
+      } catch(error) {
+        console.error(error)
+      }
+    }
+
     function debounce(func, delay){
       let timeoutId 
       return function(...args){
