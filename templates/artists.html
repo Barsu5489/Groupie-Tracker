@@ -18,6 +18,10 @@
     </div> -->
   </nav>
   <main>
+    <div class = "search Container">
+      <input type="text" id = "Search-Bar" placeholder="type here">
+      <ul id="suggestions"></ul>
+    </div>
     <div class="grid-container">
       {{ range . }}
       <div class="card">
@@ -59,5 +63,20 @@
     </div>
   </footer>
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const searchBar = document.getElementById('Search-Bar')
+    const suggestionList = document.getElementById('suggetions')
+
+    searchBar.addEventListener('input', debounce(searchArtists,300))
+    function debounce(func, delay){
+      let timeoutId 
+      return function(...args){
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => func.apply(this, args), delay)
+      }
+    }
+  })
+</script>
 
 </html>
