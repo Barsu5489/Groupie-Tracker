@@ -1,9 +1,12 @@
 package backend
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // artistHandler handles requests to the home page and serves artist cards
@@ -128,4 +131,30 @@ func LocationsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderTemplate(w, "locations.html", location)
+}
+func Search(w http.ResponseWriter, r *http.Request) {
+	query := strings.ToLower(r.URL.Query().Get("q"))
+
+	artists, err := GetAndUnmarshalArtists()
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+		log.Printf("Error retrieving artists: %v", err)
+		return
+	}
+	suggestions := []string{}
+
+	for _, v := range artists {
+		if strings.Contains(strings.ToLower(v.Name), query) {
+			suggestions = append(suggestions, fmt.Sprintf("%v - artists/band", v.Name))
+		}
+
+		for _, mem := range v.Members {
+			if strings.Contains(strings.ToLower(mem), query) {
+				suggestions = append(suggestions, fmt.Sprintf("%v - Members", mem))
+			}
+		}
+	}
+	fmt.Println(suggestions)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(suggestions)
 }
