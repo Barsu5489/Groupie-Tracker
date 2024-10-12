@@ -12,5 +12,6 @@ func RegisterRoutes() *http.ServeMux {
 	mux.HandleFunc("/locations", LocationsHandler)
 	mux.HandleFunc("/dates", DatesHandler)
 	mux.HandleFunc("/relation", ArtistDetailsHandler)
+	mux.HandleFunc("/api/search", Search)
 	return mux
 }
