@@ -150,15 +150,15 @@ func Search(w http.ResponseWriter, r *http.Request) {
 
 		for _, mem := range v.Members {
 			if strings.Contains(strings.ToLower(mem), query) {
-				suggestions = append(suggestions, fmt.Sprintf("%v - Members", mem))
+				suggestions = append(suggestions, fmt.Sprintf("%v - Members %v", mem, v.Name))
 			}
 		}
 		if strings.Contains(strings.ToLower(v.FirstAlbum), query) {
-			suggestions = append(suggestions, fmt.Sprintf("%v produced firstalbum on %v ",v.Name, v.FirstAlbum))
+			suggestions = append(suggestions, fmt.Sprintf("%v produced firstalbum on %v ", v.Name, v.FirstAlbum))
 		}
-		
+
 		if strings.Contains(strconv.Itoa(v.CreationDate), query) {
-			suggestions = append(suggestions, fmt.Sprintf("%v created on %v",v.Name, v.CreationDate))
+			suggestions = append(suggestions, fmt.Sprintf("%v created on %v", v.Name, v.CreationDate))
 		}
 	}
 	fmt.Println(suggestions)
