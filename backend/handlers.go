@@ -161,6 +161,26 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			suggestions = append(suggestions, fmt.Sprintf("%v created on %v", v.Name, v.CreationDate))
 		}
 	}
+	location, err := GetAndUnmarshalLocation()
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+		log.Printf("Error retrieving artists: %v", err)
+		return
+	}
+	// locate := []string{}
+
+	for _, loc := range location.Index {
+		for _, l := range loc.Locations {
+			if strings.Contains(strings.ToLower(l), query) {
+				for _, v := range artists {
+					if v.ID == loc.ID {
+						suggestions = append(suggestions, fmt.Sprintf("%v performing at %v", v.Name, l))
+					}
+				}
+			}
+		}
+	}
+
 	fmt.Println(suggestions)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(suggestions)
