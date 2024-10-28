@@ -99,6 +99,15 @@ func GetAndUnmarshalLocations(ID int) (Location, error) {
 	}
 	return Location{}, fmt.Errorf("location with ID %d not found", ID)
 }
+func GetAndUnmarshalLocation() (Locations, error) {
+	locations := Locations{}
+	err := unmarshalData(&locationsData, "/locations", &locations)
+	if err != nil {
+		return Locations{}, err
+	}
+
+	return locations, nil
+}
 
 // GetAndUnmarshalDates returns specific dates by their ID
 func GetAndUnmarshalDates(ID int) (Date, error) {
