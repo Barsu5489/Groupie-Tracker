@@ -124,6 +124,14 @@ func GetAndUnmarshalDates(ID int) (Date, error) {
 	}
 	return Date{}, fmt.Errorf("date with ID %d not found", ID)
 }
+func GetAndUnmarshalDate() (Dates, error) {
+	dates := Dates{}
+	err := unmarshalData(&datesData, "/dates", &dates)
+	if err != nil {
+		return Dates{}, err
+	}
+	return dates, nil
+}
 
 // GetAndUnmarshalRelation returns artist details by their ID
 func GetAndUnmarshalRelation(ID int) (ArtistDetails, error) {
