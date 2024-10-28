@@ -180,6 +180,24 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	dates, err := GetAndUnmarshalDate()
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+		log.Printf("Error retrieving artists: %v", err)
+		return
+	}
+
+	for _, date := range dates.Index {
+		for _, d := range date.Dates {
+			if strings.Contains(strings.ToLower(d), query) {
+				for _, v := range artists {
+					if v.ID == date.ID {
+						suggestions = append(suggestions, fmt.Sprintf("%v will be performing on %v", v.Name, d))
+					}
+				}
+			}
+		}
+	}
 
 	fmt.Println(suggestions)
 	w.Header().Set("Content-Type", "application/json")
