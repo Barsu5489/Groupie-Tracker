@@ -12,14 +12,25 @@
 <body>
   <nav class="navbar">
     <a href="/" class="navbar-brand">Groupie Tracker</a>
-    <!-- <div class="navbar-menu">
-        <a href="/">About</a>
-        <a href="/">Contact</a>
-    </div> -->
+    <div class="navbar-menu">
+      <!-- <a href="/">About</a>
+        <a href="/">Contact</a> -->
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search..." autocomplete="off" id="searchInput">
+        <div class="search-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="search-results" id="searchResults">
+          <!-- Results will be dynamically populated -->
+        </div>
+      </div>
+    </div>
   </nav>
   <main>
-    <div class = "search Container">
-      <input type="text" id = "Search-Bar" placeholder="type here">
+    <div class="search Container">
       <ul id="suggestions"></ul>
     </div>
     <div class="grid-container">
@@ -43,7 +54,7 @@
             </div>
           </div>
           <div class="button-group">
-            <button><a href="/locations?id={{ .ID }}" target="_blank">Locations</a></button>
+            <button><a href="/locations?id={{ .ID }}">Locations</a></button>
             <button><a href="/dates?id={{ .ID }}" target="_blank">Dates</a></button>
             <button><a href="/relation?id={{ .ID }}" target="_blank">Relation</a></button>
           </div>
@@ -64,37 +75,48 @@
   </footer>
 </body>
 <script>
-  document.addEventListener('DOMContentLoaded', function(){
-    const searchBar = document.getElementById('Search-Bar')
-    const suggestionList = document.getElementById('suggestions')
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchBar = document.getElementById('searchInput')
+    const suggestionList = document.getElementById('searchResults')
 
-    searchBar.addEventListener('input', debounce(searchArtists,300))
+    searchBar.addEventListener('input', debounce(searchArtists, 300))
 
     async function searchArtists() {
       const query = searchBar.value
-      if (query.length < 2) {
-        suggestionList.innerHTML=""
+      if (query.length < 1) {
+        suggestionList.innerHTML = ""
         return
-      } 
+      }
 
-      try{
+      try {
         const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
         const suggestions = await response.json()
         console.log(suggestions)
-        suggestionList.innerHTML = ""
-        suggestions.forEach(suggestion => {
-          let list = document.createElement('li')
-          list.textContent=suggestion
-          suggestionList.appendChild(list)
-        });
-      } catch(error) {
+        // suggestionList.innerHTML = ""
+        // suggestions.forEach(suggestion => {
+        //   let list = document.createElement('li')
+        //   list.textContent=suggestion
+        //   suggestionList.appendChild(list)
+        // });
+
+        // Display results
+        if (suggestions.length > 0) {
+          suggestionList.innerHTML = suggestions
+            .map(result => `<div class="result-item">${result}</div>`)
+            .join('');
+          suggestionList.style.display = 'block';
+        } else {
+          suggestionList.innerHTML = '<div class="result-item">No results found</div>';
+          suggestionList.style.display = 'block';
+        }
+      } catch (error) {
         console.error(error)
       }
     }
 
-    function debounce(func, delay){
-      let timeoutId 
-      return function(...args){
+    function debounce(func, delay) {
+      let timeoutId
+      return function (...args) {
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => func.apply(this, args), delay)
       }

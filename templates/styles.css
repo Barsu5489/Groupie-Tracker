@@ -4,6 +4,10 @@
     --table-bg-color: #1e1e1e;
     --table-header-bg-color: #282828;
     --text-color: #f5f5f5;
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --accent-color: #4a9eff;
+    --search-bg: #2d2d2d;
 }
 
 body {
@@ -97,6 +101,94 @@ button {
 
 button:hover {
     background-color: #4f4ac4;
+}
+
+.search-container {
+    position: relative;
+    width: 200px;
+    max-width: 90%;
+    margin-right: 70px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 45px 15px 20px;
+    border-radius: 25px;
+    border: 2px solid var(--search-bg);
+    background: var(--search-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    right: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.search-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: #8a8a8a;
+    stroke-width: 2;
+    transition: stroke 0.3s ease;
+}
+
+.search-icon:hover svg {
+    stroke: var(--accent-color);
+}
+
+/* Animation for focus state */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.search-input:focus {
+    animation: pulse 0.5s ease;
+}
+
+/* Results container */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--search-bg);
+    border-radius: 15px;
+    margin-top: 10px;
+    padding: 10px 0;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.result-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.result-item:hover {
+    background: rgba(74, 158, 255, 0.1);
 }
 
 /* Styles for the tooltip */
