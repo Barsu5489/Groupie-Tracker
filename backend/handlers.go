@@ -174,7 +174,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			if strings.Contains(strings.ToLower(l), query) {
 				for _, v := range artists {
 					if v.ID == loc.ID {
-						suggestions = append(suggestions, fmt.Sprintf("%v performing at %v", v.Name, l))
+						suggestions = append(suggestions, fmt.Sprintf("%v performing at%d %v", v.Name, v.ID, l))
 					}
 				}
 			}
