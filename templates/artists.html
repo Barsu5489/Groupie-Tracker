@@ -75,6 +75,7 @@
   </footer>
 </body>
 <script>
+  let suggestions = [];
   document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.getElementById('searchInput')
     const suggestionList = document.getElementById('searchResults')
@@ -87,11 +88,12 @@
         suggestionList.innerHTML = ""
         return
       }
+  
 
       try {
         const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
-        const suggestions = await response.json()
-        console.log(suggestions)
+        suggestions = await response.json()
+        // console.log(suggestions)
         // suggestionList.innerHTML = ""
         // suggestions.forEach(suggestion => {
         //   let list = document.createElement('li')
@@ -101,8 +103,11 @@
 
         // Display results
         if (suggestions.length > 0) {
+          // console.log(suggestions) 
           suggestionList.innerHTML = suggestions
-            .map(result => `<div class="result-item">${result}</div>`)
+            .map((result, index) =>
+            `<div class="result-item" data-id="${index}">${result}</div>`
+             )
             .join('');
           suggestionList.style.display = 'block';
         } else {
@@ -112,6 +117,19 @@
       } catch (error) {
         console.error(error)
       }
+      suggestionList.addEventListener('click', function (event) {
+  const resultItem = event.target.closest('.result-item');
+  console.log("zc",resultItem)
+  if (resultItem) {
+    const index = resultItem.getAttribute('data-id');
+    console.log(index)
+    const selectedArtist = suggestions[index]; 
+    console.log('Selected Artist:', selectedArtist); 
+    alert(`You selected: ${selectedArtist}`);
+  }
+});
+
+
     }
 
     function debounce(func, delay) {
