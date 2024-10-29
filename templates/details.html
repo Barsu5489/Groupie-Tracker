@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Artist.Name }} - Details</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">Groupie Tracker</a>
+    <!-- Add more navigation items as needed -->
+  </nav>
+
+  <main>
+    <div class="artist-details">
+      <h1>{{ .Artist.Name }}</h1>
+      <img src="{{ .Artist.ImageURL }}" alt="{{ .Artist.Name }} Image">
+      <h2>Members:</h2>
+      <ul>
+        {{ range .Artist.Members }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+      <p><strong>Creation Date:</strong> {{ .Artist.CreationDate }}</p>
+      <p><strong>First Album:</strong> {{ .Artist.FirstAlbum }}</p>
+
+      <h2>Performance Dates:</h2>
+      <ul>
+        {{ range .Dates.Dates }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+
+      <h2>Locations:</h2>
+      <ul>
+        {{ range .Locations.Locations }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+
+      <h2>Relations:</h2>
+      <ul>
+        {{ range $key, $value := .Relation.DatesLocations }}
+        <li>
+            <p>{{ $key }}: {{ range $index, $item := $value }}</p>
+            <p>{{ $item }}</p>
+            {{ end }}
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2023. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a>
+  </footer>
+</body>
+
+</html>
