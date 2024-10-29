@@ -43,3 +43,10 @@ type ArtistDetails struct {
 	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
+
+type BandDetails struct {
+	Artist    Artists  // Replace with your actual artist struct type
+	Relation  ArtistDetails // Replace with your actual relation struct type
+	Dates     Date // Replace with your actual date struct type
+	Locations Location // Replace with your actual location struct type
+}

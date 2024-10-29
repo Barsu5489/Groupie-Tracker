@@ -28,6 +28,75 @@ func ArtistsHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "artists.html", artists)
 }
 
+func DetailsHanlder(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/details" {
+		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
+		return
+	} else if r.Method != http.MethodGet {
+		// Handle only GET requests
+		renderError(w, http.StatusMethodNotAllowed, "Method Not Allowed", "Only GET requests are allowed on this route")
+		return
+	}
+	queryParams := r.URL.Query()
+	idValue := queryParams.Get("id")
+	ID, err := strconv.Atoi(idValue)
+	if err != nil {
+		renderError(w, http.StatusBadRequest, "Bad Request", "Please request artist information from the links in the cards")
+		log.Printf("Error converting id param to int value: %v", err)
+		return
+	}
+
+	if ID <= 0 || ID > 52 {
+		renderError(w, http.StatusNotFound, "Not Found", "Only 52 artists information exists, please request artist information from the links in the cards")
+		log.Printf("ID out of range: %d", ID)
+		return
+	}
+	artists, err := GetAndUnmarshalArtists()
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+		log.Printf("Error retrieving artists: %v", err)
+		return
+	}
+
+	var selectedArtist Artists // Define Artist struct as per your model
+	for _, artist := range artists {
+		if artist.ID == ID { // Assuming each artist has an ID field
+			selectedArtist = artist
+			break
+		}
+	}
+
+	relation, err := GetAndUnmarshalRelation(ID)
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve relation data")
+		log.Printf("Error retrieving relation data: %v", err)
+		return
+	}
+
+	date, err := GetAndUnmarshalDates(ID)
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve dates data")
+		log.Printf("Error retrieving relation data: %v", err)
+		return
+	}
+
+	location, err := GetAndUnmarshalLocations(ID)
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve locations data")
+		log.Printf("Error retrieving relation data: %v", err)
+		return
+	}
+
+	details := BandDetails{
+		Artist: selectedArtist,
+		Relation: relation,
+		Dates: date,
+		Locations: location,
+	}
+	
+	renderTemplate(w, "details.html", details)
+}
+
 // artistDetailsHandler handles requests for the artist relation data
 func ArtistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/relation" {
