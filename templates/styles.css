@@ -298,7 +298,7 @@ button:hover {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     max-width: 1200px;
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
     padding-bottom: 20px;
 }
@@ -485,4 +485,62 @@ footer {
     color: #ccc;
     font-size: 14px;
     z-index: 1;
+}
+
+/* Consistent style for the artist-details section */
+.artist-details {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #1e1e1e; /* Matches existing dark theme */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Consistent shadow style */
+    text-align: center;
+}
+
+.artist-details h1 {
+    font-size: 2rem;
+    color: #e2e2e2; /* Light text color */
+    margin-bottom: 1rem;
+}
+
+.artist-details img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Consistent shadow style */
+}
+
+.artist-details h2 {
+    font-size: 1.5rem;
+    color: #d4d4d4; /* Slightly lighter gray for emphasis */
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.artist-details ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.artist-details ul li {
+    font-size: 1rem;
+    color: #b3b3b3;
+    margin: 0.3rem 0;
+}
+
+.artist-details p {
+    font-size: 1rem;
+    color: #c4c4c4;
+    margin: 0.5rem 0;
+    text-align: left;
+}
+
+.artist-details p strong {
+    font-weight: 600;
+    color: #f4f4f4;
 }
