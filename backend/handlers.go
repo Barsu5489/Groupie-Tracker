@@ -201,6 +201,84 @@ func LocationsHandler(w http.ResponseWriter, r *http.Request) {
 
 	renderTemplate(w, "locations.html", location)
 }
+
+// func Search(w http.ResponseWriter, r *http.Request) {
+// 	query := strings.ToLower(r.URL.Query().Get("q"))
+
+// 	artists, err := GetAndUnmarshalArtists()
+// 	if err != nil {
+// 		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+// 		log.Printf("Error retrieving artists: %v", err)
+// 		return
+// 	}
+// 	suggestions := []string{}
+
+// 	for _, v := range artists {
+// 		if strings.Contains(strings.ToLower(v.Name), query) {
+// 			suggestions = append(suggestions, fmt.Sprintf("%v - artists/band", v.Name))
+// 		}
+
+// 		for _, mem := range v.Members {
+// 			if strings.Contains(strings.ToLower(mem), query) {
+// 				suggestions = append(suggestions, fmt.Sprintf("%v - Members %v", mem, v.Name))
+// 			}
+// 		}
+// 		if strings.Contains(strings.ToLower(v.FirstAlbum), query) {
+// 			suggestions = append(suggestions, fmt.Sprintf("%v produced firstalbum on %v ", v.Name, v.FirstAlbum))
+// 		}
+
+// 		if strings.Contains(strconv.Itoa(v.CreationDate), query) {
+// 			suggestions = append(suggestions, fmt.Sprintf("%v created on %v", v.Name, v.CreationDate))
+// 		}
+// 	}
+// 	location, err := GetAndUnmarshalLocation()
+// 	if err != nil {
+// 		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+// 		log.Printf("Error retrieving artists: %v", err)
+// 		return
+// 	}
+// 	// locate := []string{}
+
+// 	for _, loc := range location.Index {
+// 		for _, l := range loc.Locations {
+// 			if strings.Contains(strings.ToLower(l), query) {
+// 				for _, v := range artists {
+// 					if v.ID == loc.ID {
+// 						suggestions = append(suggestions, fmt.Sprintf("%v performing at%d %v", v.Name, v.ID, l))
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	dates, err := GetAndUnmarshalDate()
+// 	if err != nil {
+// 		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+// 		log.Printf("Error retrieving artists: %v", err)
+// 		return
+// 	}
+
+// 	for _, date := range dates.Index {
+// 		for _, d := range date.Dates {
+// 			if strings.Contains(strings.ToLower(d), query) {
+// 				for _, v := range artists {
+// 					if v.ID == date.ID {
+// 						suggestions = append(suggestions, fmt.Sprintf("%v will be performing on %v", v.Name, d))
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+
+// 	fmt.Println(suggestions)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(suggestions)
+// }
+
+type Suggestion struct {
+	ID   int    `json:"id"`
+	Text string `json:"text"`
+}
+
 func Search(w http.ResponseWriter, r *http.Request) {
 	query := strings.ToLower(r.URL.Query().Get("q"))
 
@@ -210,49 +288,68 @@ func Search(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error retrieving artists: %v", err)
 		return
 	}
-	suggestions := []string{}
+
+	suggestions := []Suggestion{}
 
 	for _, v := range artists {
 		if strings.Contains(strings.ToLower(v.Name), query) {
-			suggestions = append(suggestions, fmt.Sprintf("%v - artists/band", v.Name))
+			suggestions = append(suggestions, Suggestion{
+				ID:   v.ID,
+				Text: fmt.Sprintf("%v - artists/band", v.Name),
+			})
 		}
 
 		for _, mem := range v.Members {
 			if strings.Contains(strings.ToLower(mem), query) {
-				suggestions = append(suggestions, fmt.Sprintf("%v - Members %v", mem, v.Name))
+				suggestions = append(suggestions, Suggestion{
+					ID:   v.ID,
+					Text: fmt.Sprintf("%v - Member of %v", mem, v.Name),
+				})
 			}
 		}
+
 		if strings.Contains(strings.ToLower(v.FirstAlbum), query) {
-			suggestions = append(suggestions, fmt.Sprintf("%v produced firstalbum on %v ", v.Name, v.FirstAlbum))
+			suggestions = append(suggestions, Suggestion{
+				ID:   v.ID,
+				Text: fmt.Sprintf("%v produced first album on %v", v.Name, v.FirstAlbum),
+			})
 		}
 
 		if strings.Contains(strconv.Itoa(v.CreationDate), query) {
-			suggestions = append(suggestions, fmt.Sprintf("%v created on %v", v.Name, v.CreationDate))
+			suggestions = append(suggestions, Suggestion{
+				ID:   v.ID,
+				Text: fmt.Sprintf("%v created on %v", v.Name, v.CreationDate),
+			})
 		}
 	}
+
 	location, err := GetAndUnmarshalLocation()
 	if err != nil {
-		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
-		log.Printf("Error retrieving artists: %v", err)
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve location data")
+		log.Printf("Error retrieving location: %v", err)
 		return
 	}
-	// locate := []string{}
 
 	for _, loc := range location.Index {
 		for _, l := range loc.Locations {
 			if strings.Contains(strings.ToLower(l), query) {
 				for _, v := range artists {
 					if v.ID == loc.ID {
-						suggestions = append(suggestions, fmt.Sprintf("%v performing at%d %v", v.Name, v.ID, l))
+						fmt.Println(v.ID)
+						suggestions = append(suggestions, Suggestion{
+							ID:   v.ID,
+							Text: fmt.Sprintf("%v performing at %v", v.Name, l),
+						})
 					}
 				}
 			}
 		}
 	}
+
 	dates, err := GetAndUnmarshalDate()
 	if err != nil {
-		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
-		log.Printf("Error retrieving artists: %v", err)
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve dates data")
+		log.Printf("Error retrieving dates: %v", err)
 		return
 	}
 
@@ -261,14 +358,16 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			if strings.Contains(strings.ToLower(d), query) {
 				for _, v := range artists {
 					if v.ID == date.ID {
-						suggestions = append(suggestions, fmt.Sprintf("%v will be performing on %v", v.Name, d))
+						suggestions = append(suggestions, Suggestion{
+							ID:   v.ID,
+							Text: fmt.Sprintf("%v will be performing on %v", v.Name, d),
+						})
 					}
 				}
 			}
 		}
 	}
 
-	fmt.Println(suggestions)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(suggestions)
 }
