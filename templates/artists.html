@@ -117,6 +117,7 @@
         if (suggestions.length > 0) {
           // console.log(suggestions) 
           suggestionList.innerHTML = suggestions
+            .slice(0, 10)
             .map((suggestion) =>
               `<div class="result-item">
                 <a href="/details?id=${suggestion.id}">${suggestion.text}</a>
