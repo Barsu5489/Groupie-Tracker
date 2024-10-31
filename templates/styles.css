@@ -445,6 +445,10 @@ a {
 }
 
 @media screen and (max-width: 600px) {
+    .artist-details {
+        display: flex;
+        flex-direction: column;
+    }
     table {
         border: 0;
     }
@@ -495,8 +499,11 @@ footer {
 }
 /* Consistent style for the artist-details section */
 .artist-details {
-    max-width: 200px;
+    max-width: 1200px;
+    display: flex;
+    gap: 8rem;
     margin: 1rem ;
+    margin: 0 auto;
     padding: 1.5rem;
     background-color: #1e1e1e; /* Matches existing dark theme */
     border-radius: 8px;
