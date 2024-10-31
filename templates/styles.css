@@ -501,6 +501,8 @@ footer {
 .artist-details {
     max-width: 1200px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 8rem;
     margin: 1rem ;
     margin: 0 auto;
