@@ -131,17 +131,16 @@
       } catch (error) {
         console.error(error)
       }
-      suggestionList.addEventListener('click', function (event) {
-        const resultItem = event.target.closest('.result-item');
-        console.log("zc", resultItem)
-        if (resultItem) {
-          const index = resultItem.getAttribute('data-id');
-          console.log(index)
-          const selectedArtist = suggestions[index];
-          console.log('Selected Artist:', selectedArtist);
-          alert(`You selected: ${selectedArtist}`);
-        }
-      });
+      // suggestionList.addEventListener('click', function (event) {
+      //   const resultItem = event.target.closest('.result-item');
+      //   console.log("zc", resultItem)
+      //   if (resultItem) {
+      //     const index = resultItem.getAttribute('data-id');
+      //     console.log(index)
+      //     const selectedArtist = suggestions[index];
+        
+      //   }
+      // });
 
 
     }

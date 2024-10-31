@@ -15,17 +15,21 @@
     </nav>
 
     <main>
+        <div class="art-detail">
         <div class="artist-details">
             <h1>{{ .Artist.Name }}</h1>
             <img src="{{ .Artist.ImageURL }}" alt="{{ .Artist.Name }} Image">
+        </div>
+        <div class="band-members">
             <h2>Members:</h2>
             <ul>
                 {{ range .Artist.Members }}
-                <li>{{ . }}</li>
+                <li style="color:  #00aaff;">{{ . }}</li>
                 {{ end }}
             </ul>
-            <p><strong>Creation Date:</strong> {{ .Artist.CreationDate }}</p>
-            <p><strong>First Album:</strong> {{ .Artist.FirstAlbum }}</p>
+            <p><strong>Creation Date:</strong><span style="color:  #00aaff;"> {{ .Artist.CreationDate }}  </span></p>
+            <p><strong>First Album:</strong> <span style="color:  #00aaff;"> {{ .Artist.FirstAlbum }} </span></p>
+        </div>
         </div>
 
         <div class="container">
