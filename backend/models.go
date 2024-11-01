@@ -50,3 +50,8 @@ type BandDetails struct {
 	Dates     Date // Replace with your actual date struct type
 	Locations Location // Replace with your actual location struct type
 }
+
+type Suggestion struct {
+	ID   int    `json:"id"`
+	Text string `json:"text"`
+}

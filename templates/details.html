@@ -5,31 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Artist.Name }} - Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body>
     <nav class="navbar">
         <a href="/" class="navbar-brand">Groupie Tracker</a>
-        <!-- Add more navigation items as needed -->
+        <div class="navbar-menu">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search..." autocomplete="off" id="searchInput">
+                <div class="search-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <div class="search-results" id="searchResults">
+                    <!-- Results will be dynamically populated -->
+                </div>
+            </div>
+        </div>
     </nav>
 
     <main>
         <div class="artist-details">
             <div>
-            <h1>{{ .Artist.Name }}</h1>
-            <img src="{{ .Artist.ImageURL }}" alt="{{ .Artist.Name }} Image">
-        </div>
-        <div>
-            <h2>Members:</h2>
-            <ul>
-                {{ range .Artist.Members }}
-                <li>{{ . }}</li>
-                {{ end }}
-            </ul>
-            <p><strong>Creation Date:</strong> {{ .Artist.CreationDate }}</p>
-            <p><strong>First Album:</strong> {{ .Artist.FirstAlbum }}</p>
-        </div>
+                <h1>{{ .Artist.Name }}</h1>
+                <img src="{{ .Artist.ImageURL }}" alt="{{ .Artist.Name }} Image">
+            </div>
+            <div>
+                <h2>Members:</h2>
+                <ul>
+                    {{ range .Artist.Members }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+                <p><strong>Creation Date:</strong> {{ .Artist.CreationDate }}</p>
+                <p><strong>First Album:</strong> {{ .Artist.FirstAlbum }}</p>
+            </div>
         </div>
 
         <div class="container">
@@ -103,9 +117,67 @@
     </main>
 
     <footer>
-        &copy; 2023. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
-            Service</a>
+        &copy; 2024 . All rights reserved. | <a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a
+            href="/term" aria-label="Terms of Service">Terms of Service</a>
+        <div class="social-icons">
+            <a href="https://facebook.com/" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
     </footer>
+    <script>
+        let suggestions = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBar = document.getElementById('searchInput')
+            const suggestionList = document.getElementById('searchResults')
+
+            searchBar.addEventListener('input', debounce(searchArtists, 300))
+
+            async function searchArtists() {
+                const query = searchBar.value
+                if (query.length < 1) {
+                    suggestionList.innerHTML = ""
+                    suggestionList.style.display = 'none';
+                    return
+                }
+
+
+                try {
+                    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+                    suggestions = await response.json();
+
+                    // Display results
+                    if (suggestions.length > 0) {
+                        // console.log(suggestions) 
+                        suggestionList.innerHTML = suggestions
+                            .slice(0, 10)
+                            .map((suggestion) =>
+                                `<div class="result-item">
+                      <a href="/details?id=${suggestion.id}">${suggestion.text}</a>
+                    </div>`
+                            )
+                            .join('');
+                        suggestionList.style.display = 'block';
+                    } else {
+                        suggestionList.innerHTML = '<div class="result-item">No results found</div>';
+                        suggestionList.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error(error)
+                }
+
+            }
+
+            function debounce(func, delay) {
+                let timeoutId
+                return function (...args) {
+                    clearTimeout(timeoutId)
+                    timeoutId = setTimeout(() => func.apply(this, args), delay)
+                }
+            }
+        })
+    </script>
 </body>
 
 </html>

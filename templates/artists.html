@@ -13,8 +13,6 @@
   <nav class="navbar">
     <a href="/" class="navbar-brand">Groupie Tracker</a>
     <div class="navbar-menu">
-      <!-- <a href="/">About</a>
-        <a href="/">Contact</a> -->
       <div class="search-container">
         <input type="text" class="search-input" placeholder="Search..." autocomplete="off" id="searchInput">
         <div class="search-icon">
@@ -33,34 +31,7 @@
     <div class="search Container">
       <ul id="suggestions"></ul>
     </div>
-    <!-- <div class="grid-container"> -->
-    <!-- {{ range . }}
-      <div class="card">
-        <img src="{{ .ImageURL }}" alt="image">
-        <div class="card-content">
-          <h2>{{ .Name }}</h2>
-          <div class="tooltip">
-            <a href="#">Show Details</a>
-            <div class="tooltip-content">
-              <span class="close-btn">&times;</span>
-              <ul>
-                <p><b>Members:</b></p>
-                {{ range .Members }}
-                <li>{{ . }}</li>
-                {{ end }}
-                <p><b>Creation Date:</b> {{ .CreationDate }}</p>
-                <p><b>First Album:</b> {{ .FirstAlbum }}</p>
-              </ul>
-            </div>
-          </div>
-          <div class="button-group">
-            <button><a href="/locations?id={{ .ID }}">Locations</a></button>
-            <button><a href="/dates?id={{ .ID }}" target="_blank">Dates</a></button>
-            <button><a href="/relation?id={{ .ID }}" target="_blank">Relation</a></button>
-          </div>
-        </div>
-      </div>
-      {{ end }} -->
+
     <div class="grid-container">
       {{ range . }}
       <div class="card">
@@ -72,10 +43,9 @@
       {{ end }}
     </div>
 
-    <!-- </div> -->
   </main>
   <footer>
-    &copy; 2023 . All rights reserved. | <a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a
+    &copy; 2024 . All rights reserved. | <a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a
       href="/term" aria-label="Terms of Service">Terms of Service</a>
     <div class="social-icons">
       <a href="https://facebook.com/" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
@@ -84,76 +54,58 @@
       <a href="https://youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
   </footer>
-</body>
-<script>
-  let suggestions = [];
-  document.addEventListener('DOMContentLoaded', function () {
-    const searchBar = document.getElementById('searchInput')
-    const suggestionList = document.getElementById('searchResults')
+  <script>
+    let suggestions = [];
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchBar = document.getElementById('searchInput')
+      const suggestionList = document.getElementById('searchResults')
 
-    searchBar.addEventListener('input', debounce(searchArtists, 300))
+      searchBar.addEventListener('input', debounce(searchArtists, 300))
 
-    async function searchArtists() {
-      const query = searchBar.value
-      if (query.length < 1) {
-        suggestionList.innerHTML = ""
-        suggestionList.style.display = 'none';
-        return
-      }
-
-
-      try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
-        suggestions = await response.json()
-        // console.log(suggestions)
-        // suggestionList.innerHTML = ""
-        // suggestions.forEach(suggestion => {
-        //   let list = document.createElement('li')
-        //   list.textContent=suggestion
-        //   suggestionList.appendChild(list)
-        // });
-
-        // Display results
-        if (suggestions.length > 0) {
-          // console.log(suggestions) 
-          suggestionList.innerHTML = suggestions
-            .slice(0, 10)
-            .map((suggestion) =>
-              `<div class="result-item">
-                <a href="/details?id=${suggestion.id}">${suggestion.text}</a>
-              </div>`
-            )
-            .join('');
-          suggestionList.style.display = 'block';
-        } else {
-          suggestionList.innerHTML = '<div class="result-item">No results found</div>';
-          suggestionList.style.display = 'block';
+      async function searchArtists() {
+        const query = searchBar.value
+        if (query.length < 1) {
+          suggestionList.innerHTML = ""
+          suggestionList.style.display = 'none';
+          return
         }
-      } catch (error) {
-        console.error(error)
+
+
+        try {
+          const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+          suggestions = await response.json();
+
+          // Display results
+          if (suggestions.length > 0) {
+            // console.log(suggestions) 
+            suggestionList.innerHTML = suggestions
+              .slice(0, 10)
+              .map((suggestion) =>
+                `<div class="result-item">
+                  <a href="/details?id=${suggestion.id}">${suggestion.text}</a>
+                </div>`
+              )
+              .join('');
+            suggestionList.style.display = 'block';
+          } else {
+            suggestionList.innerHTML = '<div class="result-item">No results found</div>';
+            suggestionList.style.display = 'block';
+          }
+        } catch (error) {
+          console.error(error)
+        }
+
       }
-      // suggestionList.addEventListener('click', function (event) {
-      //   const resultItem = event.target.closest('.result-item');
-      //   console.log("zc", resultItem)
-      //   if (resultItem) {
-      //     const index = resultItem.getAttribute('data-id');
-      //     console.log(index)
-      //     const selectedArtist = suggestions[index];
-        
-      //   }
-      // });
 
-
-    }
-
-    function debounce(func, delay) {
-      let timeoutId
-      return function (...args) {
-        clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => func.apply(this, args), delay)
+      function debounce(func, delay) {
+        let timeoutId
+        return function (...args) {
+          clearTimeout(timeoutId)
+          timeoutId = setTimeout(() => func.apply(this, args), delay)
+        }
       }
-    }
-  })
-</script>
+    })
+  </script>
+</body>
 
 </html>

@@ -432,6 +432,7 @@ p {
 /* dates and locations table styling */
 .container {
     max-width: 1200px;
+    /* min-width: 300px; */
     width: 70%;
     margin: 0 auto;
     padding-top: 10px;
@@ -537,6 +538,7 @@ footer {
 /* Consistent style for the artist-details section */
 .artist-details {
     max-width: 1200px;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
