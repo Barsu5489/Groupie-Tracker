@@ -58,6 +58,14 @@
     let suggestions = [];
     document.addEventListener('DOMContentLoaded', function () {
       const searchBar = document.getElementById('searchInput')
+      searchBar.addEventListener('keydown', function (event) {
+        // when suggestion is one 
+  if (event.key === 'Enter' && suggestions.length === 1) {
+    const firstSuggestion = suggestions[0];
+    window.location.href = `/details?id=${firstSuggestion.id}`;
+  }
+});
+
       const suggestionList = document.getElementById('searchResults')
 
       searchBar.addEventListener('input', debounce(searchArtists, 300))
