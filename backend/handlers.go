@@ -293,3 +293,34 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(suggestions)
 }
+
+// FilterArtists returns artist data for a list of IDs
+func FilterArtistsHandler(w http.ResponseWriter, r *http.Request) {
+    idsQuery := r.URL.Query()["ids"] // Retrieve 'ids' query parameter as a slice
+    if len(idsQuery) == 0 {
+        http.Error(w, "No IDs provided", http.StatusBadRequest)
+        return
+    }
+
+	artists, err := GetAndUnmarshalArtists()
+	if err != nil {
+		renderError(w, http.StatusInternalServerError, "Internal server error", "Failed to retrieve artists data")
+		log.Printf("Error retrieving artists: %v", err)
+		return
+	}
+
+    var matchingArtists []Artists
+    // Assuming 'artists' is a slice of all available artists
+    for _, artist := range artists {
+        for _, id := range idsQuery {
+            if strconv.Itoa(artist.ID) == id {
+                matchingArtists = append(matchingArtists, artist)
+                break
+            }
+        }
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(matchingArtists)
+}
+
