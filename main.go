@@ -7,7 +7,7 @@ import (
 	"groupie-tracker/backend"
 )
 
-// main sets up a simple http server, logs the url and initializes the server to listen and serve on port 8080
+//main sets up a simple http server, logs the url and initializes the server to listen and serve on port 8080
 func main() {
 	server := http.Server{
 		Addr:    ":8000",

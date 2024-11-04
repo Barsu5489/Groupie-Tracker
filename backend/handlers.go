@@ -98,6 +98,7 @@ func DetailsHanlder(w http.ResponseWriter, r *http.Request) {
 }
 
 // artistDetailsHandler handles requests for the artist relation data
+
 func ArtistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/relation" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")
@@ -133,6 +134,7 @@ func ArtistDetailsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // dates Handler handles requests for the dates data
+
 func DatesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/dates" {
 		renderError(w, http.StatusNotFound, "Not Found", "The requested URL was not found on this server")

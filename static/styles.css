@@ -484,6 +484,9 @@ a {
         display: flex;
         flex-direction: column;
     }
+    footer{
+        margin-right: 10px;
+    }
 
     table {
         border: 0;
@@ -517,6 +520,9 @@ a {
 
 /* footer styling */
 footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -527,6 +533,10 @@ footer {
     color: #ccc;
     font-size: 14px;
     z-index: 1;
+}
+
+footer .footer {
+    flex: 1 1 auto;
 }
 
 .art-detail {
